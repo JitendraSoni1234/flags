@@ -7,28 +7,25 @@ import NotFound from "../components/NotFound";
 
 function CountryDetail() {
   const { id = "" } = useParams();
-  const { data, isError, isLoading } = useGetCountryDetailQuery(id); 
-  const {
-    data: borderData,
-    isLoading: isBorderLoading,
-    isError: isBorderError,
-  } = useGetBorderCountriesQuery(data?.[0]?.borders?.join(","), { skip: !data?.[0]?.borders });
+  const { data, isError, isLoading } = useGetCountryDetailQuery(id);
+  const { data: borderData, isLoading: isBorderLoading, isError: isBorderError } = useGetBorderCountriesQuery(data?.[0]?.borders?.join(","), { skip: !data?.[0]?.borders });
   const navigate = useNavigate();
 
   if (isLoading || isBorderLoading) {
     return <Loading />;
   }
   if (isError || isBorderError) {
-    return <NotFound action={() => navigate('/')} />;
+    return <NotFound action={() => navigate("/")} />;
   }
   if (data && data.length) {
     const {
       flags: { svg },
       name: { common, nativeName },
       population,
-      borders,
+      independent,
       region,
       subregion,
+      maps,
       capital,
       tld,
       currencies,
@@ -86,6 +83,14 @@ function CountryDetail() {
                 </h6>
                 <h6 className="font-semiBold text-[18px]">
                   Languages: <span className="font-light">{Object.values(languages || {})?.join(", ")}</span>
+                </h6>
+                <h6 className="font-semiBold text-[18px]">
+                  Independent: <span className="font-light">{independent ? "Self Governing" : "Non Self Governing"}</span>
+                </h6>
+                <h6 className="font-semiBold text-[18px] mt-2">
+                  <a className="font-light px-[25px] py-[10px] bg-color-component shadow-md rounded-md" href={maps?.googleMaps} target="_blank">
+                    View on map
+                  </a>
                 </h6>
               </div>
             </div>
