@@ -19,7 +19,7 @@ const navbar = () => {
 
   return (
     <nav className="bg-white text-color bg-color-component border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-xl min-h-[90px] flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center">
           <span className="self-center text-2xl font-extraBold whitespace-nowrap dark:text-white">Where in the world?</span>
         </Link>
